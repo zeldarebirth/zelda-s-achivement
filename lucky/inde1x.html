@@ -1,0 +1,210 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>成就页面</title>
+    <style>
+        body {
+            margin: 0;
+            padding: 0;
+            font-family: Arial, sans-serif;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            background-color: #f0f0f0;
+            overflow: hidden;
+        }
+
+       .page {
+            display: none;
+            text-align: center;
+            width: 100vw;
+            height: 100vh;
+            justify-content: center;
+            align-items: center;
+            flex-direction: column;
+            font-size: 24px;
+        }
+
+       .option {
+            margin: 20px;
+            padding: 15px 30px;
+            background-color: #4CAF50;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+
+       .back-button {
+            position: absolute;
+            bottom: 20px;
+            right: 20px;
+            padding: 10px 20px;
+            background-color: #FF5733;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+
+       .continue-button {
+            position: absolute;
+            bottom: 20px;
+            left: 20px;
+            padding: 10px 20px;
+            background-color: #337AB7;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            display: none;
+        }
+
+        #message {
+            position: absolute;
+            opacity: 0;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+        }
+    </style>
+</head>
+
+<body>
+    <div class="page" id="page1">
+        <p>恭喜塔珂老师！</p>
+        <p>您已成功解锁成就</p>
+        <p>猛兽排队钓鱼届的”反向欧皇“</p>
+    </div>
+    <div class="page" id="page2">
+        <p>虽然今天钓鱼运气一般，但成功钓到了我的“专属惊喜”</p>
+    </div>
+    <div class="page" id="page3">
+        <p>作为奖励，您可以向我兑换一项“专属服务”</p>
+        <button class="option" id="optionA">选项A：Word自己可以写论文，从idea到投稿，Word一手包办，轻松发刊不是梦</button>
+        <button class="option" id="optionB">选项B：游戏遇到的Boss都是一击即死，所到之处无往不利，游戏爽感拉满</button>
+    </div>
+    <div class="page" id="page4">
+        <span id="message">想得美</span>
+        <button class="back-button" id="backButton">返回</button>
+        <button class="continue-button" id="continueButton">继续</button>
+    </div>
+    <div class="page" id="page5">
+        <p>学术和游戏岂能走捷径！认命吧少年！</p>
+    </div>
+    <audio id="backgroundAudio" loop>
+    <source src="猛兽派对背景音.mp3" type="audio/mpeg">
+</audio>
+<audio id="thoughtBeautifulAudio">
+    <source src="想得美.mp3" type="audio/mpeg">
+</audio>
+    
+    <script>
+        const page1 = document.getElementById('page1');
+        const page2 = document.getElementById('page2');
+        const page3 = document.getElementById('page3');
+        const page4 = document.getElementById('page4');
+        const page5 = document.getElementById('page5');
+        const optionA = document.getElementById('optionA');
+        const optionB = document.getElementById('optionB');
+        const backButton = document.getElementById('backButton');
+        const continueButton = document.getElementById('continueButton');
+        const message = document.getElementById('message');
+        const backgroundAudio = document.getElementById('backgroundAudio');
+        const thoughtBeautifulAudio = document.getElementById('thoughtBeautifulAudio');
+
+        page1.style.display = 'flex';
+
+        // 处理背景音频在点击后播放
+        document.addEventListener('click', function () {
+            backgroundAudio.play();
+            document.removeEventListener('click', arguments.callee);
+        });
+
+        function showPage(targetPage) {
+            page1.style.display = 'none';
+            page2.style.display = 'none';
+            page3.style.display = 'none';
+            page4.style.display = 'none';
+            page5.style.display = 'none';
+            targetPage.style.display = 'flex';
+        }
+
+        page1.addEventListener('click', function () {
+            showPage(page2);
+        });
+
+        page2.addEventListener('click', function () {
+            showPage(page3);
+        });
+
+        optionA.addEventListener('click', function () {
+            showPage(page4);
+            thoughtBeautifulAudio.play();
+            let scale = 0.1;
+            let opacity = 0;
+            const interval = setInterval(() => {
+                scale += 0.05;
+                opacity += 0.1;
+                message.style.transform = `scale(${scale})`;
+                message.style.opacity = opacity;
+                if (scale >= 1 && opacity >= 1) {
+                    clearInterval(interval);
+                    setTimeout(() => {
+                        let fadeInterval = setInterval(() => {
+                            opacity -= 0.1;
+                            message.style.opacity = opacity;
+                            if (opacity <= 0) {
+                                clearInterval(fadeInterval);
+                                continueButton.style.display = 'block';
+                            }
+                        }, 100);
+                    }, 1000);
+                }
+            }, 100);
+        });
+
+        optionB.addEventListener('click', function () {
+            showPage(page4);
+            thoughtBeautifulAudio.play();
+            let scale = 0.1;
+            let opacity = 0;
+            const interval = setInterval(() => {
+                scale += 0.05;
+                opacity += 0.1;
+                message.style.transform = `scale(${scale})`;
+                message.style.opacity = opacity;
+                if (scale >= 1 && opacity >= 1) {
+                    clearInterval(interval);
+                    setTimeout(() => {
+                        let fadeInterval = setInterval(() => {
+                            opacity -= 0.1;
+                            message.style.opacity = opacity;
+                            if (opacity <= 0) {
+                                clearInterval(fadeInterval);
+                                continueButton.style.display = 'block';
+                            }
+                        }, 100);
+                    }, 1000);
+                }
+            }, 100);
+        });
+
+        backButton.addEventListener('click', function () {
+            showPage(page3);
+            continueButton.style.display = 'none';
+        });
+
+        continueButton.addEventListener('click', function () {
+            showPage(page5);
+        });
+    </script>
+
+</body>
+
+
+</html>
